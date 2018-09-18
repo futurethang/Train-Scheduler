@@ -1,15 +1,20 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>Title</title>
+
+<head>
+    <title>Train Scheduler</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
-  </head>
-  <body>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/styles/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
     <div class="container">
         <div class="row">
             <div class="col-md-12 header">
@@ -29,33 +34,86 @@
                             <th>Next Arrival</th>
                             <th>Minutes Away</th>
                         </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td scope="row">Train #1</td>
-                                <td>Seattle</td>
-                                <td>Runs every 10 min</td>
-                                <td>3:30PM</td>
-                                <td>45 minutes</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Train #1</td>
-                                <td>Seattle</td>
-                                <td>Runs every 10 min</td>
-                                <td>3:30PM</td>
-                                <td>45 minutes</td>
-                            </tr>
-                        </tbody>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td scope="row">Train #1</td>
+                            <td>Seattle</td>
+                            <td>Runs every 10 min</td>
+                            <td>3:30PM</td>
+                            <td>45 minutes</td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Train #1</td>
+                            <td>Seattle</td>
+                            <td>Runs every 10 min</td>
+                            <td>3:30PM</td>
+                            <td>45 minutes</td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
 
         </div>
 
-    </div>  
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
-  </body>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel-group">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modelId">
+                        Add Train
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title" id="modelTitleId">Add A Train Route</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="panel panel-info">
+                                        
+                                        <div class="panel-body">
+                                            <form action="/action_page.php">
+                                                <div class="form-group">
+                                                    <label for="train_name">Train Name:</label>
+                                                    <input type="text" class="form-control" id="train_name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="destination">Destination:</label>
+                                                    <input type="text" class="form-control" id="destination">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="depart_time">Time of Departure (Military time HH:MM):</label>
+                                                    <input type="text" class="form-control" id="depart_time">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="frequency">Frequency (min):</label>
+                                                    <input type="text" class="form-control" id="frequency">
+                                                </div>
+                                                
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
 </html>
