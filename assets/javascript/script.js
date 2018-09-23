@@ -1,3 +1,13 @@
+var config = {
+    apiKey: "AIzaSyAw5JWcODtCGZnUIhNjwTg7CiaX8470R-Y",
+    authDomain: "train-scheduler-f78e0.firebaseapp.com",
+    databaseURL: "https://train-scheduler-f78e0.firebaseio.com",
+    projectId: "train-scheduler-f78e0",
+    storageBucket: "train-scheduler-f78e0.appspot.com",
+    messagingSenderId: "335881857413"
+  };
+  firebase.initializeApp(config);
+
 ///////// INPUT VARIABLES
 var $train_name = $("#train-name");
 var $train_origin = $("#train_origin"); // Not yet defined in the HTML
@@ -11,7 +21,7 @@ var $frequency = $("#frequency");
 
 ///// DATABASE VARIABLES
 var trains = []; // an array of train objects based on constructor
-var database = firebase.database();
+var database = firebase.database().ref();
 
 /////////// TRAIN CONSTRUCTOR
 function train(name, origin, destination, depart_time, travel_time, frequency) {
@@ -27,9 +37,8 @@ function train(name, origin, destination, depart_time, travel_time, frequency) {
     };
 
     calculateMinutesAway = function () {
-        
+        return this.arrivalTime - currentTime; // inser Date object return here
     };
-
 }
 
 /////////// HELPER FUNCTIONS
@@ -45,7 +54,9 @@ function checkForDuplicateTrain(newTrain) {
 // so when a train is added to the schedule, I need to store a train instance along with all of the parameters
 // and functions needed to update its time stamps. 
 
-database.ref().on("value", function (snapshot) {
+// perhaps very useful for unique IDs when pushing to firebase DB https://www.tutorialspoint.com/firebase/firebase_write_list_data.htm
+
+database.ref().on("value", function (snapshot) { // YET TO BE EDITED, THE CONDITION MIGHT NOT BE NECESSARY IS CHECKED IN THE SUBMIT EVENT BELOW
     if (snapshot.child("trainReference").exists()) {
         // Set the local variables for train properties equal to the stored values in firebase.
         var trainName = $train_name;
@@ -73,7 +84,7 @@ database.ref().on("value", function (snapshot) {
     // Else Firebase doesn't have a Train, so use the initial local values.
     else {} // write in the state for only local info shown
 }
-
+)
 $("#submit").on("click", function(e) {  
     e.preventDefault();
 
@@ -82,6 +93,8 @@ $("#submit").on("click", function(e) {
     var trainFrequency = $("frequency").val().trim();
     var trainDepartTime = $("#depart_time").val().trim();
 
+
+    if (checkForDuplicateTrain()) {} // THIS CONSITION BEFORE THE DATABASE CHANGE THAT TRIGGERS THE "VALUE" EVENT
     database.ref().set({
         name: trainName,
         destination: trainDestination,
