@@ -21,7 +21,7 @@ $("#submit").on("click", function (e) {
     var $travel_time = $("#travel_time").val().trim();
     var $frequency = $("#frequency").val().trim();
 
-    database.ref().push({
+    database.ref('/trains').push({
         name: $train_name,
         origin: $train_origin,
         destination: $destination,
@@ -41,7 +41,7 @@ $("#submit").on("click", function (e) {
     $("#frequency").val("");
 })
 
-database.ref().on("child_added", function (snapshot) {
+database.ref('/trains').on("child_added", function (snapshot) {
     console.log(snapshot.val());
 
     ///////// GRAB INPUT VARIABLES
@@ -51,6 +51,17 @@ database.ref().on("child_added", function (snapshot) {
     var fbdepart_time = snapshot.val().depart_time;
     var fbtravel_time = snapshot.val().travel_time;
     var fbfrequency = snapshot.val().frequency;
+
+    console.group("firebase values");
+    console.log(fbtrain_name);
+    console.log(fbtrain_origin);
+    console.log(fbdestination);
+    console.log(fbtravel_time);
+    console.groupEnd();
+
+    var nextTrain = function() {
+        
+    }
 
     var newRow = $("<tr>").append(
         $("<td>").text(fbtrain_name),
