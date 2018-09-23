@@ -5,16 +5,44 @@ var config = {
     projectId: "train-scheduler-f78e0",
     storageBucket: "train-scheduler-f78e0.appspot.com",
     messagingSenderId: "335881857413"
-  };
-  firebase.initializeApp(config);
+};
+firebase.initializeApp(config);
 
-///////// INPUT VARIABLES
-var $train_name = $("#train-name");
-var $train_origin = $("#train_origin"); // Not yet defined in the HTML
-var $destination = $("#destination");
-var $depart_time = $("#depart_time");
-var travel_time = $("#travel_time"); // not yet defined in the HTML
-var $frequency = $("#frequency");
+var database = firebase.database();
+
+$("#submit").on("click", function (e) {
+    e.preventDefault();
+
+    ///////// GRAB INPUT VARIABLES
+    var $train_name = $("#train-name").val().trim();
+    var $train_origin = $("#origin").val().trim();
+    var $destination = $("#destination").val().trim();
+    var $depart_time = $("#depart_time").val().trim();
+    var $travel_time = $("#travel_time").val().trim(); // not yet defined in the HTML
+    var $frequency = $("#frequency").val().trim();
+
+    database.ref().push({
+        name: $train_name,
+        origin: $train_origin,
+        destination: $destination,
+        depart_time: $depart_time,
+        travel_time: $travel_time,
+        frequency: $frequency
+    })
+
+    alert("train added");
+
+    // CLEAR THE INPUTS
+    $("#train-name").val("");
+    $("#origin").val("");
+    $("#destination").val("");
+    $("#depart_time").val("");
+    $("#travel_time").val("");
+    $("#frequency").val("");
+})
+
+
+
 
 ////////// OUTPUT VARIABLES
 // defined in the loop that writes new table rows on form submit (see below)
@@ -45,7 +73,7 @@ function train(name, origin, destination, depart_time, travel_time, frequency) {
 function checkForDuplicateTrain(newTrain) {
     if (trainArray.contains(newtrain)) { // the key thing I want to check is if the origin and destination are same
         alert("That route already exists")
-    } else {trains.push(newTrain)} // Add the new train to the trains array
+    } else { trains.push(newTrain) } // Add the new train to the trains array
 }
 
 
@@ -70,7 +98,7 @@ database.ref().on("value", function (snapshot) { // YET TO BE EDITED, THE CONDIT
         // need to loop through the firebaseDB to populate the #train_schedule table, preferably in order of arrival times
         var newRow = $("<tr>");
         var newColumn = $("<td>");
-                
+
         for (let i = 0; i < trainArray.length; i++) {
             trainName = "<td>" + snapshot.val()[i].trainName + "</td>";
             trainDestination = "<td>" + snapshot.val()[i].trainDestination + "</td>";
@@ -82,10 +110,10 @@ database.ref().on("value", function (snapshot) { // YET TO BE EDITED, THE CONDIT
         }
     }
     // Else Firebase doesn't have a Train, so use the initial local values.
-    else {} // write in the state for only local info shown
+    else { } // write in the state for only local info shown
 }
 )
-$("#submit").on("click", function(e) {  
+$("#submit").on("click", function (e) {
     e.preventDefault();
 
     var trainName = $("#train_name").val().trim();
@@ -94,7 +122,7 @@ $("#submit").on("click", function(e) {
     var trainDepartTime = $("#depart_time").val().trim();
 
 
-    if (checkForDuplicateTrain()) {} // THIS CONSITION BEFORE THE DATABASE CHANGE THAT TRIGGERS THE "VALUE" EVENT
+    if (checkForDuplicateTrain()) { } // THIS CONSITION BEFORE THE DATABASE CHANGE THAT TRIGGERS THE "VALUE" EVENT
     database.ref().set({
         name: trainName,
         destination: trainDestination,
