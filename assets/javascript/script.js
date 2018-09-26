@@ -18,7 +18,6 @@ $("#submit").on("click", function (e) {
     var $train_origin = $("#origin").val().trim();
     var $destination = $("#destination").val().trim();
     var $depart_time = $("#depart_time").val().trim();
-    var $travel_time = $("#travel_time").val().trim();
     var $frequency = $("#frequency").val().trim();
 
     database.ref('/trains').push({
@@ -26,7 +25,6 @@ $("#submit").on("click", function (e) {
         origin: $train_origin,
         destination: $destination,
         depart_time: $depart_time,
-        travel_time: $travel_time,
         frequency: $frequency
     })
 
@@ -37,7 +35,6 @@ $("#submit").on("click", function (e) {
     $("#origin").val("");
     $("#destination").val("");
     $("#depart_time").val("");
-    $("#travel_time").val("");
     $("#frequency").val("");
 })
 
@@ -63,7 +60,7 @@ database.ref('/trains').on("child_added", function (snapshot) {
         var nextTrain = moment().add(tMinutesTillTrain, "minutes");
         console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
         console.groupEnd();
-        return moment(nextTrain).format("hh:mm"));
+        return moment(nextTrain).format("hh:mm a");
     }
 
     ///////// GRAB INPUT VARIABLES
@@ -71,9 +68,7 @@ database.ref('/trains').on("child_added", function (snapshot) {
     var fbtrain_origin = snapshot.val().origin;
     var fbdestination = snapshot.val().destination;
     var fbdepart_time = snapshot.val().depart_time;
-    var fbtravel_time = snapshot.val().travel_time;
     var fbfrequency = snapshot.val().frequency;
-    debugger;
     var fbNextTrain = nextTrainCalc(fbdepart_time, fbfrequency);
 
     console.group("firebase values");
@@ -81,7 +76,6 @@ database.ref('/trains').on("child_added", function (snapshot) {
     console.log(fbtrain_origin);
     console.log(fbdestination);
     console.log(fbdepart_time);
-    console.log(fbtravel_time);
     console.log(fbfrequency);
     console.log(fbNextTrain);
     console.groupEnd();
@@ -90,9 +84,9 @@ database.ref('/trains').on("child_added", function (snapshot) {
         $("<td>").text(fbtrain_name),
         $("<td>").text(fbtrain_origin),
         $("<td>").text(fbdestination),
-        $("<td>").text(fbdepart_time),
-        $("<td>").text(fbtravel_time),
-        $("<td>").text(fbfrequency),
+        $("<td>").text(moment(fbdepart_time, "hhmma").format("hh:mm a")),
+        $("<td>").text(fbfrequency + " minutes"),
+        $("<td>").text(fbNextTrain)
     )
     $("#train_schedule > tbody").append(newRow);
 })
