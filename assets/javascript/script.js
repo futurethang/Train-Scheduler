@@ -27,10 +27,11 @@ $("#submit").on("click", function (e) {
         depart_time: $depart_time,
         frequency: $frequency
     })
-    $("#modelId").removeClass('modal in');
-    $(".modal-backdrop").removeClass('in');
 
-    // $('#IDModal').modal('hide');
+    // CLOSE MODAL WINDOW
+    $("#modelId").removeClass();
+    $("#modelId").addClass('modal fade');
+    $(".modal-backdrop").removeClass('in');
 
     alert("train added");
 
