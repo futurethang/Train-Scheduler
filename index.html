@@ -1,126 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>Train Scheduler</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="assets/styles/bootstrap.min.css"> -->
-    <link rel="stylesheet" href="assets/styles/style.css">
-    
+  <title>Train Scheduler</title><!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"><!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"><!-- <link rel="stylesheet" href="assets/styles/bootstrap.min.css"> -->
+  <link href="assets/styles/style.css" rel="stylesheet">
 </head>
-
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 header">
-                <h1 id="test">Train Scheduler</h1>
-                <h2>Subtitle</h2>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table table-striped table-inverse table-responsive" id="train_schedule">
-                    <thead class="thead-inverse|thead-default">
-                        <tr>
-                            <th>Train Name</th>
-                            <th>Origin</th>
-                            <th>First Train</th>
-                            <th>Depart Time</th>
-                            <th>Runs Every</th>
-                            <th>Next Train in</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel-group">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modelId">
-                        Add Train
-                    </button>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
-                        aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <h4 class="modal-title" id="modelTitleId">Add A Train Route</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="panel panel-info">
-                                        
-                                        <div class="panel-body">
-                                            
-                                                <div class="form-group">
-                                                    <form>
-                                                        <label for="train_name">Train Name:</label>
-                                                        <input type="text" class="form-control" id="train_name" required />
-                                                    </form>
-                                                </div>
-                                                <div class="form-group">
-                                                    <form>
-                                                        <label for="origin">Origin:</label>
-                                                        <input type="text" class="form-control" id="origin" required />
-                                                    </form>
-                                                </div>
-                                                <div class="form-group">
-                                                    <form>
-                                                        <label for="destination">Destination:</label>
-                                                        <input type="text" class="form-control" id="destination" required />
-                                                    </form>
-                                                </div>
-                                                <div class="form-group">
-                                                    <form>
-                                                        <label for="depart_time">Time of Departure (Military time HH:MM):</label>
-                                                        <input type="time" class="form-control" id="depart_time" required />
-                                                    </form>
-                                                </div>
-                                                <div class="form-group">
-                                                    <form>
-                                                        <label for="frequency">Frequency (in minutes):</label>
-                                                        <input type="number" class="form-control" id="frequency" required />
-                                                    </form>
-                                                </div>
-                                                
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary" id="submit">Submit</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 header">
+        <h1 id="test">Train Scheduler</h1>
+        <h2>Subtitle</h2>
+      </div>
     </div>
-    <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
-    <!-- <script src="assets/javascript/jquery.min.js"></script>
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-striped table-inverse table-responsive" id="train_schedule">
+          <thead class="thead-inverse|thead-default">
+            <tr>
+              <th>Train Name</th>
+              <th>Origin</th>
+              <th>First Train</th>
+              <th>Depart Time</th>
+              <th>Runs Every</th>
+              <th>Next Train in</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel-group">
+          <!-- Button trigger modal -->
+           <button class="btn btn-primary btn-lg" data-target="#modelId" data-toggle="modal" type="button">Add Train</button> <!-- Modal -->
+          <div aria-hidden="true" aria-labelledby="modelTitleId" class="modal fade" id="modelId" role="dialog" tabindex="-1">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="modelTitleId">Add A Train Route</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="panel panel-info">
+                    <div class="panel-body">
+                      <div class="form-group">
+                        <form>
+                          <label for="train_name">Train Name:</label> <input class="form-control" id="train_name" required="" type="text">
+                        </form>
+                      </div>
+                      <div class="form-group">
+                        <form>
+                          <label for="origin">Origin:</label> <input class="form-control" id="origin" required="" type="text">
+                        </form>
+                      </div>
+                      <div class="form-group">
+                        <form>
+                          <label for="destination">Destination:</label> <input class="form-control" id="destination" required="" type="text">
+                        </form>
+                      </div>
+                      <div class="form-group">
+                        <form>
+                          <label for="depart_time">Time of Departure (Military time HH:MM):</label> <input class="form-control" id="depart_time" required="" type="time">
+                        </form>
+                      </div>
+                      <div class="form-group">
+                        <form>
+                          <label for="frequency">Frequency (in minutes):</label> <input class="form-control" id="frequency" required="" type="number">
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-primary" id="submit" type="submit">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js">
+  </script> <!-- <script src="assets/javascript/jquery.min.js"></script>
     <script src="assets/javascript/bootstrap.min.js"></script> -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
-    <script src="assets/javascript/script.js"></script>
+   
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+  </script> 
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+  </script> 
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js">
+  </script> 
+  <script src="assets/javascript/script.js">
+  </script>
 </body>
-
 </html>
