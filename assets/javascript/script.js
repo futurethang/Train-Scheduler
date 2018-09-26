@@ -11,7 +11,7 @@ firebase.initializeApp(config);
 var database = firebase.database();
 
 $("#submit").on("click", function (e) {
-    e.preventDefault();
+    // e.preventDefault();
 
     ///////// GRAB INPUT VARIABLES
     var $train_name = $("#train_name").val().trim();
@@ -27,6 +27,7 @@ $("#submit").on("click", function (e) {
         depart_time: $depart_time,
         frequency: $frequency
     })
+    // $("#modelId").removeClass('modal');
 
     alert("train added");
 
@@ -36,6 +37,8 @@ $("#submit").on("click", function (e) {
     $("#destination").val("");
     $("#depart_time").val("");
     $("#frequency").val("");
+
+
 })
 
 
