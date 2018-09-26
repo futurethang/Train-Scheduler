@@ -41,8 +41,30 @@ $("#submit").on("click", function (e) {
     $("#frequency").val("");
 })
 
+
+
 database.ref('/trains').on("child_added", function (snapshot) {
     console.log(snapshot.val());
+
+    function nextTrainCalc(depart, frequency) {
+        var now = moment();
+        var firstTime = depart;
+        console.group("nextTrain function");
+        console.log(depart);
+        var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
+        console.log(firstTimeConverted);
+        console.log("CURRENT TIME: " + moment(now).format("hh:mm"));
+        var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+        console.log("DIFFERENCE IN TIME: " + diffTime);
+        var tRemainder = diffTime % frequency;
+        console.log(tRemainder);
+        var tMinutesTillTrain = frequency - tRemainder;
+        console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+        var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+        console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+        console.groupEnd();
+        return moment(nextTrain).format("hh:mm"));
+    }
 
     ///////// GRAB INPUT VARIABLES
     var fbtrain_name = snapshot.val().name;
@@ -51,17 +73,18 @@ database.ref('/trains').on("child_added", function (snapshot) {
     var fbdepart_time = snapshot.val().depart_time;
     var fbtravel_time = snapshot.val().travel_time;
     var fbfrequency = snapshot.val().frequency;
+    debugger;
+    var fbNextTrain = nextTrainCalc(fbdepart_time, fbfrequency);
 
     console.group("firebase values");
     console.log(fbtrain_name);
     console.log(fbtrain_origin);
     console.log(fbdestination);
+    console.log(fbdepart_time);
     console.log(fbtravel_time);
+    console.log(fbfrequency);
+    console.log(fbNextTrain);
     console.groupEnd();
-
-    var nextTrain = function() {
-        
-    }
 
     var newRow = $("<tr>").append(
         $("<td>").text(fbtrain_name),
@@ -71,7 +94,6 @@ database.ref('/trains').on("child_added", function (snapshot) {
         $("<td>").text(fbtravel_time),
         $("<td>").text(fbfrequency),
     )
-
     $("#train_schedule > tbody").append(newRow);
 })
 
