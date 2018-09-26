@@ -63,7 +63,8 @@ database.ref('/trains').on("child_added", function (snapshot) {
         var nextTrain = moment().add(tMinutesTillTrain, "minutes");
         console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
         console.groupEnd();
-        return moment(nextTrain).format("hh:mm a");
+        // return moment(nextTrain).format("hh:mm a");
+        return tMinutesTillTrain;
     }
 
     ///////// GRAB INPUT VARIABLES
@@ -89,7 +90,7 @@ database.ref('/trains').on("child_added", function (snapshot) {
         $("<td>").text(fbdestination),
         $("<td>").text(moment(fbdepart_time, "hhmma").format("hh:mm a")),
         $("<td>").text(fbfrequency + " minutes"),
-        $("<td>").text(fbNextTrain)
+        $("<td>").text(fbNextTrain + " minutes")
     )
     $("#train_schedule > tbody").append(newRow);
 })

@@ -81,3 +81,24 @@ After completing the homework please add the piece to your portfolio. Make sure 
 If you have any questions about this project or the material we have covered, please post them in the community channels in slack so that your fellow developers can help you! If you're still having trouble, you can come to office hours for assistance from your instructor and TAs.
 
 **Good Luck!**
+
+
+------------------------------------
+
+#Project Notes:
+Copy from the class exercises to get the mechanics and output for:
+* Firebase DB read/write
+* Moment.js time calculations
+I should be able to just plug it right in to the UI I already finished. The main task here is getting familiar with the new concepts of database communication and time calculating. 
+
+* order by child and try to order by minutes until arrival
+* change arrival time to minutes until, not next clock time
+------------------------------------
+
+#Bug Notes As of Noon 9/23
+
+
+* Modal does not close when the submit button pressed. Add to click event. Need to check the Bootstrap documentation or help to figure out.
+* have not started on any further goals, move on to the next class assignment that pertains
+* required fields not working
+* form in general needs a good look

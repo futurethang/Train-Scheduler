@@ -30,10 +30,10 @@
                         <tr>
                             <th>Train Name</th>
                             <th>Origin</th>
-                            <th>Destination</th>
+                            <th>First Train</th>
                             <th>Depart Time</th>
                             <th>Runs Every</th>
-                            <th>Next Train</th>
+                            <th>Next Train in</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,23 +69,23 @@
                                             <form>
                                                 <div class="form-group">
                                                     <label for="train_name">Train Name:</label>
-                                                    <input type="text" class="form-control" id="train_name">
+                                                    <input type="text" class="form-control" id="train_name" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="origin">Origin:</label>
-                                                    <input type="text" class="form-control" id="origin">
+                                                    <input type="text" class="form-control" id="origin" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="destination">Destination:</label>
-                                                    <input type="text" class="form-control" id="destination">
+                                                    <input type="text" class="form-control" id="destination" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="depart_time">Time of Departure (Military time HH:MM):</label>
-                                                    <input type="time" class="form-control" id="depart_time">
+                                                    <input type="time" class="form-control" id="depart_time" required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="frequency">Frequency (in minutes):</label>
-                                                    <input type="number" class="form-control" id="frequency">
+                                                    <input type="number" class="form-control" id="frequency" required>
                                                 </div>
                                                 
                                             </form>
