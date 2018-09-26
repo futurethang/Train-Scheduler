@@ -10,7 +10,7 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
-$("#submit").on("click", function (e) {
+$("#my-form").on("submit", function (e) {
     e.preventDefault();
 
     ///////// GRAB INPUT VARIABLES
