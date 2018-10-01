@@ -88,13 +88,10 @@ If you have any questions about this project or the material we have covered, pl
 #Project Notes:
 
 * order by child and try to order by minutes until arrival
-* change arrival time to minutes until, not next clock time
 * more interesting styles
 * look into the advanced objectives
 ------------------------------------
 
 #Bug Notes As of 9/25
-* Modal does not close when the submit button pressed. Add to click event. Need to check the Bootstrap documentation or help to figure out.
+
 * have not started on any further goals, move on to the next class assignment that pertains
-* required fields not working
-* form in general needs a good look

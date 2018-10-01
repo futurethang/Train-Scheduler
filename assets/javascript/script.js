@@ -10,6 +10,29 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
+// CALCULATE THE TIME DIFFERENCES USING MOMENT.JS, OUTPUT VALUE FOR TIME UNTIL NEXT TRAIN
+function nextTrainCalc(depart, frequency) {
+    var now = moment();
+    var firstTime = depart;
+    // console.group("nextTrain function");
+    // console.log(depart);
+    var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
+    // console.log(firstTimeConverted);
+    // console.log("CURRENT TIME: " + moment(now).format("hh:mm"));
+    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    // console.log("DIFFERENCE IN TIME: " + diffTime);
+    var tRemainder = diffTime % frequency;
+    // console.log(tRemainder);
+    var tMinutesTillTrain = frequency - tRemainder;
+    // console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+    var nextTrain = moment().add(tMinutesTillTrain, "minutes");
+    // console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+    // console.groupEnd();
+    // return moment(nextTrain).format("hh:mm a");
+    return tMinutesTillTrain;
+}
+
+
 $("#my-form").on("submit", function (e) {
     e.preventDefault();
 
@@ -19,13 +42,15 @@ $("#my-form").on("submit", function (e) {
     var $destination = $("#destination").val().trim();
     var $depart_time = $("#depart_time").val().trim();
     var $frequency = $("#frequency").val().trim();
+    var $nextTrain = nextTrainCalc($depart_time, $frequency);
 
     database.ref('/trains').push({
         name: $train_name,
         origin: $train_origin,
         destination: $destination,
         depart_time: $depart_time,
-        frequency: $frequency
+        frequency: $frequency,
+        nextTrain: $nextTrain
     })
 
     // CLOSE MODAL WINDOW, RESET DEFAULTS TO ALLOW OPENING AGAIN
@@ -42,34 +67,11 @@ $("#my-form").on("submit", function (e) {
     $("#depart_time").val("");
     $("#frequency").val("");
 
-
 })
 
-
-
-database.ref('/trains').on("child_added", function (snapshot) {
+// 
+database.ref('/trains').orderByChild("nextTrain").on("child_added", function (snapshot) {
     console.log(snapshot.val());
-
-    function nextTrainCalc(depart, frequency) {
-        var now = moment();
-        var firstTime = depart;
-        console.group("nextTrain function");
-        console.log(depart);
-        var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
-        console.log(firstTimeConverted);
-        console.log("CURRENT TIME: " + moment(now).format("hh:mm"));
-        var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
-        console.log("DIFFERENCE IN TIME: " + diffTime);
-        var tRemainder = diffTime % frequency;
-        console.log(tRemainder);
-        var tMinutesTillTrain = frequency - tRemainder;
-        console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
-        var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-        console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
-        console.groupEnd();
-        // return moment(nextTrain).format("hh:mm a");
-        return tMinutesTillTrain;
-    }
 
     ///////// GRAB INPUT VARIABLES
     var fbtrain_name = snapshot.val().name;
@@ -79,15 +81,7 @@ database.ref('/trains').on("child_added", function (snapshot) {
     var fbfrequency = snapshot.val().frequency;
     var fbNextTrain = nextTrainCalc(fbdepart_time, fbfrequency);
 
-    console.group("firebase values");
-    console.log(fbtrain_name);
-    console.log(fbtrain_origin);
-    console.log(fbdestination);
-    console.log(fbdepart_time);
-    console.log(fbfrequency);
-    console.log(fbNextTrain);
-    console.groupEnd();
-
+    // UPDATE DOM TABLE WITH VALUE RETURNS
     var newRow = $("<tr>").append(
         $("<td>").text(fbtrain_name),
         $("<td>").text(fbtrain_origin),
